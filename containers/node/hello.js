@@ -1,0 +1,1 @@
+console.log('This application was executed by Node.js container');

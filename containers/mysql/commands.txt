@@ -1,0 +1,35 @@
+## EXAMPLE 1 
+## Default bridge network
+
+START MYSQL SERVER WITH CUSTOM ROOT PASSWORD
+docker run \
+    -e MYSQL_ROOT_PASSWORD=my-password \
+    mysql
+
+START PHPMYADMIN WITH PMA_HOST VARIABLE (over IP address)
+docker run \
+    -p 8080:80 \
+    -e PMA_HOST=172.17.0.2 \
+    phpmyadmin/phpmyadmin
+
+
+
+## EXAMPLE 2 
+## Custom bridge network
+
+CREATE CUSTOM BRIDGE NETWORK
+docker network create mysql
+
+START MYSQL SERVER WITH CUSTOM ROOT PASSWORD
+docker run \
+    --network mysql \
+    -e MYSQL_ROOT_PASSWORD=my-password \
+    --name mysql \
+    -d mysql
+
+START PHPMYADMIN WITH PMA_HOST VARIABLE (over DNS name - name of the container)
+docker run \
+    --network mysql \
+    -p 8080:80 \
+    -e PMA_HOST=mysql \
+    -d phpmyadmin/phpmyadmin
