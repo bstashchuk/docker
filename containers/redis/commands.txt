@@ -1,0 +1,16 @@
+CREATE NEW CUSTOM NETWORK
+docker network create redis
+
+LAUNCH REDIS CONTAINER
+docker run \
+    --name redis \
+    --network redis \
+    -d redis
+
+LAUNCH REDIS-COMMANDER CONTAINER
+docker run \
+    --name redis-commander \
+    --network redis \
+    -p 8081:8081 \
+    -e REDIS_HOST=redis \
+    -d rediscommander/redis-commander

@@ -1,0 +1,17 @@
+CREATE NEW CUSTOM BRIDGE NETWORK
+docker network create elasticsearch
+
+CREATE ELASTICSEARCH CONTAINER
+docker run \
+    --network elasticsearch \
+    --name elasticsearch \
+    -e "discovery.type=single-node" \
+    -p 9200:9200 \
+    elasticsearch:7.6.2
+
+CREATE CURL CONTAINER
+docker run \
+    -it \
+    --network elasticsearch \
+    --name curl \
+    appropriate/curl sh
