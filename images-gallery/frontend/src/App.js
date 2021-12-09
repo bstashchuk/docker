@@ -11,10 +11,11 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5050';
 const App = () => {
   const [word, setWord] = useState('');
   const [images, setImages] = useState([]);
+  const headers = { 'Access-Control-Allow-Origin': '*' };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    fetch(`${API_URL}/new-image?query=${word}`)
+    fetch(`${API_URL}/new-image?query=${word}`, { headers })
       .then((res) => res.json())
       .then((data) => {
         setImages([{ ...data, title: word }, ...images]);
